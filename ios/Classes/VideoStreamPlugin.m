@@ -929,7 +929,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                                                  eventChannelWithName:[NSString stringWithFormat:@"video_stream/cameraEvents%lld",textureId]
                                                  binaryMessenger:_messenger];
             
-            [eventChannel setStreamHandler:cam];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [eventChannel setStreamHandler:cam];
+            });
             cam.eventChannel = eventChannel;
             result(@{
                 @"textureId" : @(textureId),
